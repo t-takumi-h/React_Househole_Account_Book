@@ -1,8 +1,5 @@
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Center, Image, Text } from '@chakra-ui/react';
+import { Box, Center } from '@chakra-ui/react';
 import { memo, VFC } from 'react';
-import { useCategoryIcons } from '../../hooks/useCategoryIcons';
-import { useDateToString } from '../../hooks/useDateToString';
 import { PaymentByDate } from '../../types/PaymentByDate';
 import { DailyPaymentList } from '../molecules/DailyPaymentList';
 import { DailyPaymentSummery } from '../molecules/DailyPaymentSummery';
