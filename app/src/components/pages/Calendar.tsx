@@ -11,6 +11,7 @@ export const Calendar = () => {
 
   const reversedPaymentsByDate = [...paymentsByDate].reverse();
   const currentDate = new Date();
+  // TODO: selectmonthコンポーネントで呼べるようにshowingDateをhooks化した方がいいかも？
   const [showingDate, setShowingDate] = useState<Date>(currentDate);
 
   useEffect(() => getPaymentsJson(showingDate), [getPaymentsJson, showingDate]);

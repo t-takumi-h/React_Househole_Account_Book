@@ -7,14 +7,20 @@ export const useDateToString = () => {
       '月' +
       date.getDate() +
       '日(' +
-      getDayToString(date) + ')';
+      getDayToString(date) +
+      ')';
     return dateToString;
   };
   const getDateToString = (date: Date) => {
-    const dateToString: string = date.getFullYear() + "-" + addZero(date.getMonth()+1) + "-" + addZero(date.getDate())
+    const dateToString: string =
+      date.getFullYear() +
+      '-' +
+      addZero(date.getMonth() + 1) +
+      '-' +
+      addZero(date.getDate());
     return dateToString;
-  }
-  return {getDateToJapaneseString, getDateToString}
+  };
+  return { getDateToJapaneseString, getDateToString };
 };
 
 const getDayToString = (date: Date) => {
@@ -39,9 +45,8 @@ const getDayToString = (date: Date) => {
 };
 
 const addZero = (n: number) => {
-  if(n >= 10){
-    return n.toString();
-  }else{
-    return ('0' + n.toString());
+  if (n < 10) {
+    return '0' + n.toString();
   }
-}
+  return n.toString();
+};

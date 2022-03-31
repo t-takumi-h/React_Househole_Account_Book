@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Box, Image, Text } from '@chakra-ui/react';
 import { memo, VFC } from 'react';
-import { useCategoryIcons } from '../../hooks/useCategoryIcons';
+import { getCategoryIconSrc } from '../../service/getCategoryIcons';
 import { Payment } from '../../types/Payment';
 
 type Props = {
@@ -10,7 +10,6 @@ type Props = {
 };
 export const DailyPaymentList: VFC<Props> = memo((props) => {
   const { pay, payIndex } = props;
-  const { getCategoryIconSrc } = useCategoryIcons();
   return (
     <Box
       display="flex"
