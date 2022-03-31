@@ -1,5 +1,5 @@
 export type Payment = {
-  id: number;
+  id: string;
   date: string;
   type: string;
   category: string;
