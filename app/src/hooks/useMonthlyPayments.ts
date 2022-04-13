@@ -34,7 +34,7 @@ export const useMonthlyPayments = () => {
           );
         });
     },
-    [getDateToString]
+    []
   );
   const getPaymentsByDate = useCallback((payments: Payment[]) => {
     const uniqueDates = Array.from(

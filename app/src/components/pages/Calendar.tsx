@@ -1,9 +1,6 @@
 import {
-  background,
-  border,
   Box,
   Button,
-  Center,
   FormControl,
   FormLabel,
   Heading,
@@ -25,18 +22,17 @@ import {
   useDisclosure,
   useRadio,
   useRadioGroup,
-  UseRadioProps,
 } from '@chakra-ui/react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ja from 'date-fns/locale/ja';
 
-import { ChangeEvent, forwardRef, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { useMonthlyPayments } from '../../hooks/useMonthlyPayments';
 import { SelectMonth } from '../molecules/SelectMonth';
 import { PaymentList } from '../organisms/PaymentList';
-import { useCategoryIcons } from '../../hooks/useCategoryIcons';
+import { getCategoryIconSrc } from '../../service/getCategoryIcons';
 import { useAddPayment } from '../../hooks/useAddPayment';
 import { useDateToString } from '../../hooks/useDateToString';
 
@@ -107,12 +103,9 @@ export const Calendar = () => {
   const { getRootProps, getRadioProps, value } = useRadioGroup({
     name: 'Category',
     defaultValue: options[0],
-    //onChange: console.log,
   });
 
   const group = getRootProps();
-
-  const { getCategoryIconSrc } = useCategoryIcons();
 
   const onClickAdd = () => {
     addPayment(getDateToString(addedDate),addedPaymentValue,addedPaymentMemo,value.toString());    
