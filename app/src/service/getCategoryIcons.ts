@@ -19,18 +19,14 @@ const categories = [
     type: 'expense',
     icon: './icon/wear.png',
   },
-];
+] as const;
 
-export const useCategoryIcons = () => {
-  const getCategoryIconSrc = (category: string) => {
-    const categoryIconSrc = categories.filter((categoryData) => {
-      return categoryData.name === category;
-    });
-    if(categoryIconSrc.length){
-      return categoryIconSrc[0].icon;
-    }
-    return "";
-  };
-
-  return {getCategoryIconSrc}
+export const getCategoryIconSrc = (category: string) => {
+  const categoryIconSrc = categories.filter((categoryData) => {
+    return categoryData.name === category;
+  });
+  if (categoryIconSrc.length) {
+    return categoryIconSrc[0].icon;
+  }
+  return '';
 };
