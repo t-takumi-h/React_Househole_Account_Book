@@ -1,0 +1,32 @@
+version: "3"
+services:
+  spring-boot:
+    build:
+      context: ./back/api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_started
+    entrypoint: "java -jar /app/app.jar"
+    networks:
+      - app-net
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/settings:/etc/mysql/conf.d/
+      - ./mysql/data/:/var/lib/mysql/
+    environment:
+      MYSQL_DATABASE: househole_account_book
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - app-net
+networks:
+  app-net:
+    driver: bridge
