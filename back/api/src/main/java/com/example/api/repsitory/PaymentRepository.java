@@ -7,5 +7,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
-    List<Payment> findByDateBetween(LocalDate date1, LocalDate date2);
+    List<Payment> findByDateBetweenOrderByDateAsc(LocalDate date1, LocalDate date2);
 }
