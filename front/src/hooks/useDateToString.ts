@@ -20,7 +20,14 @@ export const useDateToString = () => {
       addZero(date.getDate());
     return dateToString;
   };
-  return { getDateToJapaneseString, getDateToString };
+  const getYearMonthToString = (date: Date) => {
+    const YearMonthToString: string = 
+      date.getFullYear() +
+      '-' +
+      addZero(date.getMonth() + 1)
+    return YearMonthToString;
+  }
+  return { getDateToJapaneseString, getDateToString ,getYearMonthToString};
 };
 
 const getDayToString = (date: Date) => {
