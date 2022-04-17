@@ -18,7 +18,7 @@ public class PaymentFindInteractor implements IPaymentFindInputPort{
         var findingYearMonth = inputData.getYearMonth();
         var startDate = findingYearMonth.atDay(1);
         var endDate = findingYearMonth.atEndOfMonth();
-        return paymentRepository.findByDateBetween(startDate, endDate);
+        return paymentRepository.findByDateBetweenOrderByDateAsc(startDate, endDate);
     }
 
     @Override
