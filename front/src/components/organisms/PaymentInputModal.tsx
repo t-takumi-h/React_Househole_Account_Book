@@ -12,11 +12,13 @@ import {
   ModalOverlay,
   NumberInput,
   NumberInputField,
+  RadioGroup,
+  Radio,
   Stack,
   useDisclosure,
-  useRadioGroup,
 } from '@chakra-ui/react';
 import { ChangeEvent, memo, useState, VFC } from 'react';
+import { StringOrNumber } from '@chakra-ui/utils';
 
 import { useAddPayment } from '../../hooks/useAddPayment';
 import { useDateToString } from '../../hooks/useDateToString';
@@ -34,13 +36,7 @@ export const PaymentInputModal: VFC<Props> = memo((props) => {
   const { getDateToString } = useDateToString();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [addedDate, setAddedDate] = useState<Date>(showingDate);
-  
-  const options = ['住居費', '食費', '被服費'];
-  const { getRootProps, getRadioProps, value } = useRadioGroup({
-    name: 'Category',
-    defaultValue: options[0],
-  });
-
+  const [addedCategory, setAddedCategory] = useState<StringOrNumber>('');
 
   const onChangeDate = (date: Date) => {
     setAddedDate(date);
@@ -57,18 +53,27 @@ export const PaymentInputModal: VFC<Props> = memo((props) => {
     setAddedPaymentMemo(e.target.value);
   };
 
+  const [typeValue, setTypeValue] = useState('expense');
+
+  const options =
+    typeValue === 'expense' ? ['住居費', '食費', '被服費'] : ['給料'];
+  const expenseOptions = ['住居費', '食費', '被服費'];
+  const incomeOptions = ['給料'];
+
   const onClickAdd = () => {
     addPayment(
       getDateToString(addedDate),
+      typeValue,
       addedPaymentValue,
       addedPaymentMemo,
-      value.toString()
+      addedCategory.toString()
     );
   };
 
   const onClickInput = () => {
     onOpen();
   };
+
   return (
     <>
       <Button onClick={onClickInput}>入力</Button>
@@ -84,12 +89,27 @@ export const PaymentInputModal: VFC<Props> = memo((props) => {
           <ModalCloseButton />
           <ModalBody mx={4}>
             <Stack spacing={4}>
+              <FormControl>
+                <RadioGroup onChange={setTypeValue} value={typeValue}>
+                  <Stack direction="row">
+                    <Radio value="expense">支出</Radio>
+                    <Radio value="income">収入</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
               <FormControl display="flex">
                 <FormLabel w="50px">日付</FormLabel>
-                <CustomDatePicker addedDate={addedDate} onChangeDate={onChangeDate}/>
+                <CustomDatePicker
+                  addedDate={addedDate}
+                  onChangeDate={onChangeDate}
+                />
               </FormControl>
               <FormControl display="flex" alignItems="center">
-                <FormLabel w="50px">金額</FormLabel>
+                {typeValue === 'expense' ? (
+                  <FormLabel w="50px">支出</FormLabel>
+                ) : (
+                  <FormLabel w="50px">収入</FormLabel>
+                )}
                 <NumberInput
                   size="md"
                   defaultValue={0}
@@ -108,7 +128,11 @@ export const PaymentInputModal: VFC<Props> = memo((props) => {
               </FormControl>
               <FormControl>
                 <FormLabel>カテゴリー</FormLabel>
-                <CategoryRadioBox options={options} getRootProps={getRootProps} getRadioProps={getRadioProps} />
+                  <CategoryRadioBox
+                    setAddedCategory={setAddedCategory}
+                    options={ typeValue === 'expense'? expenseOptions : incomeOptions}
+                    categoryName={ typeValue }
+                  />
               </FormControl>
             </Stack>
           </ModalBody>
@@ -120,5 +144,3 @@ export const PaymentInputModal: VFC<Props> = memo((props) => {
     </>
   );
 });
-
-

@@ -1,16 +1,34 @@
-import { Box, HStack, Image, Text, useRadio } from '@chakra-ui/react';
-import { memo, VFC } from 'react';
+import {
+  Box,
+  HStack,
+  Image,
+  Text,
+  useRadio,
+  useRadioGroup,
+} from '@chakra-ui/react';
+import { StringOrNumber } from '@chakra-ui/utils';
+import React, { memo, VFC, useEffect, useState } from 'react';
 import { getCategoryIconSrc } from '../../service/getCategoryIcons';
 
 type Props = {
+  setAddedCategory: React.Dispatch<React.SetStateAction<StringOrNumber>>;
   options: string[];
-  getRootProps: any;
-  getRadioProps: any;
+  categoryName: string;
 };
 
 export const CategoryRadioBox: VFC<Props> = memo((props) => {
-  const { options, getRootProps, getRadioProps } = props;
+  const { setAddedCategory, options, categoryName} = props;
+  const { getRootProps, getRadioProps, value, setValue } = useRadioGroup({
+    name: categoryName,
+    defaultValue: options[0],
+  });
   const group = getRootProps();
+  useEffect(() => setValue(options[0]),[options[0]])
+  useEffect(() => setAddedCategory(value), [value]);
+  
+  console.log(value);
+
+
   return (
     <HStack {...group}>
       {options.map((value) => {

@@ -4,13 +4,14 @@ import { ResultDto } from '../types/ResultDto';
 export const useAddPayment = () => {
   const addPayment = (
     addDate: string,
+    addType: string,
     addPayment: number,
     addMemo: string,
     addCategory: string
   ) => {
     const addData = {
       date: addDate,
-      type: 'expense',
+      type: addType,
       category: addCategory,
       memo: addMemo,
       price: addPayment,
